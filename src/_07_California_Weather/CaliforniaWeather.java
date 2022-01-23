@@ -1,6 +1,9 @@
 package _07_California_Weather;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.swing.JOptionPane;
 
 /*
  * OBJECTIVE:
@@ -10,6 +13,7 @@ import java.util.HashMap;
  * from a day in December 2020.
  * Example: User: Encinitas
  *          Program: Encinitas is Overcast with a tempeature of 59.01 °F
+ * 		
  * 
  * 2. Create a way for the user to specify the weather condition and then
  * list the cities that have those conditions.
@@ -28,18 +32,33 @@ import java.util.HashMap;
  */
 
 public class CaliforniaWeather {
-    
+	
     void start() {
         HashMap<String, WeatherData> weatherData = Utilities.getWeatherData();
         
-        // All city keys have the first letter capitalized of each word
-        String cityName = Utilities.capitalizeWords( "National City" );
-        WeatherData datum = weatherData.get(cityName);
+        String cityInput = JOptionPane.showInputDialog("What city do you want to find the weather for?");
+        cityInput = Utilities.capitalizeWords(cityInput);
+        WeatherData cityOne = weatherData.get(cityInput);
+        System.out.println(cityOne);
         
-        if( datum == null ) {
-            System.out.println("Unable to find weather data for: " + cityName);
+        if( cityOne == null ) {
+            System.out.println("Unable to find weather data for: " + cityOne);
         } else {
-            System.out.println(cityName + " is " + datum.weatherSummary + " with a temperature of " + datum.temperatureF + " F");
+            System.out.println(cityInput + " is " + cityOne.weatherSummary + " with a temperature of " + cityOne.temperatureF + " F");
         }
+        
+        String weatherConditionsInput = JOptionPane.showInputDialog("What weather conditions are you looking for?");
+        weatherConditionsInput = Utilities.capitalizeWords(weatherConditionsInput);
+        
+        HashMap<String, WeatherData> city = Utilities.getWeatherData();
+        ArrayList<String> citiesF = new ArrayList<String>();
+        
+        for (String cityName : city.keySet()) {
+        	WeatherData cityI = weatherData.get(cityName);
+        		if(cityI.weatherSummary.equals(weatherConditionsInput)) {
+        			citiesF.add(cityName);
+        	}
+        }
+        System.out.println("Cities that are "+weatherConditionsInput+" include"+citiesF);
     }
 }

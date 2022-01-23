@@ -7,6 +7,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.Timer;
@@ -47,9 +48,25 @@ public class WorldClocks implements ActionListener {
     String dateStr;
     String timeStr;
     
+    Boolean isDone = false;
+    
     public WorldClocks() {
         clockUtil = new ClockUtilities();
-
+        
+        String userInput = JOptionPane.showInputDialog("Do you want to add a new city");
+        
+        while(isDone==false) {
+        	try {
+        		if (userInput.equals("yes")){
+        			String newCities = JOptionPane.showInputDialog("what city do you want to add?");
+        		}
+        	
+        		else if (userInput.equals("no")){
+        			isDone = true;
+        		}
+        	}
+        }
+        
         // The format for the city must be: city, country (all caps)
         city = "Chicago, US";
         timeZone = clockUtil.getTimeZoneFromCityName(city);
